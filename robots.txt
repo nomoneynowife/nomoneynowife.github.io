@@ -1,0 +1,4 @@
+User-agent: *
+Disallow: 
+
+Sitemap: http://nomoneynowife.github.io/sitemap.xml 
