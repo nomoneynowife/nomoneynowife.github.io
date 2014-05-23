@@ -9,7 +9,7 @@
   <meta name="author" content="nomoneynowife">
 
   
-  <meta name="description" content="原文链接：http://coderoncode.com/2013/07/24/introduction-hhvm.html HHVM(HIpHop Virtual Machina)把PHP代码转换成高层次的字节码(普遍认为是一种中间语言)。然后这样的字节码在运行时被JIT(just-in-time &hellip;">
+  <meta name="description" content="单例模式用于限制类实例化到单个对象，当整个系统只需要一个对象时这将有用。 单例模式被设计来确保只有一个单一的(因此得名单例)类实例，并且有一个全局的访问点。通过这个单一实例我们有一个全局的访问点并且可以延迟初始化。 一个基本的单例实现看起来像下面的例子： &lt;?php /** Example &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -71,7 +71,121 @@
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2014/05/23/an-introduction-to-hhvm/">An Introduction to HHVM</a></h1>
+      <h1 class="entry-title"><a href="/blog/2014/05/23/design-patterns-in-php-singletons/">PHP中的设计模式：单例模式</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-05-23T23:30:14+08:00" pubdate data-updated="true">May 23<span>rd</span>, 2014</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>单例模式用于限制类实例化到单个对象，当整个系统只需要一个对象时这将有用。</p>
+
+<p>单例模式被设计来确保只有一个单一的(因此得名单例)类实例，并且有一个全局的访问点。通过这个单一实例我们有一个全局的访问点并且可以延迟初始化。</p>
+
+<p>一个基本的单例实现看起来像下面的例子：</p>
+
+<pre><code>&lt;?php
+    /** Example taken from http://www.webgeekly.com/tutorials/php/how-to-create-a-singleton-class-in-php/ **/
+
+           class User
+               {
+                       // Hold an instance of the class
+                               private static $instance;
+
+                                             // The singleton method      
+                                                     public static function singleton()
+                                                             {
+                                                                         if (!isset(self::$instance)) {
+                                                                                         self::$instance = new __CLASS__;
+                                                                                                     }
+                                                                                                                 return self::$instance;
+                                                                                                                         }
+                                                                                                                              }
+
+                                                                                                                                       $user1 = User::singleton();
+                                                                                                                                           $user2 = User::singleton();
+                                                                                                                                               $user3 = User::singleton();
+
+                                                                                                                                                       ?&gt;
+                                                                                                                                                       在上面的例子中3个变量都指向同一个对象。第一次调用会实例化出一个对象，而后续的调用都只返回该对象。
+
+                                                                                                                                                       &gt;“在计算机编程中，延迟初始化是一种策略，直到第一次需要时才会去创建一个对象、计算一个值或者其他昂贵的过程。”
+
+                                                                                                                                                       让我们看看显而易见而又被忽略的事实，并且讲讲为什么单例模式被许多开发者认为是一种“反模式”，尽管这么讲要高度依赖于所使用的框架和语言，然而PHP中的单例模式几乎被普遍认为是一种“反模式”。
+
+                                                                                                                                                       *单例模式被许多人认为是一种反模式，反模式是一种解决方案，但是这种解决方案往往是无效的，甚至会带来高风险的反作用。*
+
+                                                                                                                                                       ##单例模式是来自地狱的卵？
+                                                                                                                                                       如果你之前读到过单例模式，你可能想知道到底我在表达什么？
+
+                                                                                                                                                       单例模式是邪恶的，是一种“反模式”，并且绝不能使用它。光说[单例模式是邪恶的](http://c2.com/cgi/wiki?SingletonsAreEvil "Singletons Are Evil")还仅仅不够，我们需要知道为什么需要避免使用单例模式，这正是我想在这篇文章中阐明的。
+
+                                                                                                                                                       单例模式被认为是一种“反模式”有几个原因，让我们来看看其中的一些原因：
+
+                                                                                                                                                       ##单一职责模式
+                                                                                                                                                       我们使用单一模式所面对的第一个问题便是：它的使用打破了单一职责原则。
+
+                                                                                                                                                       单例对象有着用途和控制生产出的实例数量这两个职责，而单一职责原则则指出：每个类应该只有一个职责，并且这个职责应该由类来完全封装。
+
+                                                                                                                                                       ##隐藏的依赖关系 
+                                                                                                                                                       什么是隐藏的依赖关系，以及这和单例模式是如何有关的？如果你看过我之前的有关[依赖注入](http://coderoncode.com/2014/01/06/dependency-injection-php.html "Playing with dependency injection in PHP")的文章，我们看到了如何把依赖关系通过参数传递给函数。
+
+                                                                                                                                                       一个函数接收到的任何参数称为可见的依赖。另一方面，如果一个函数需要一个类似全局变量的东西(读取单例)来运作，那么这种依赖被认为是隐藏的。
+
+                                                                                                                                                       这表明，如果不去看实际函数的实现的话，那么第三方是没有办法知道这个隐藏的依赖关系的。
+
+                                                                                                                                                       &gt;“一个可见的依赖是一种开发者可以从类的接口看见到的依赖。如果一个依赖不能从类的接口看见的话，那么这个依赖就是一个隐藏的依赖”—[jenkov.com](http://tutorials.jenkov.com/ood/understanding-dependencies.html#visiblehidden)
+
+                                                                                                                                                       ##测试
+                                                                                                                                                       伴随着这些问题，当我们对我们的应用程序进行单元测试是会有一个问题。合适的单元测试应该能像数据库那样独立地运行。单例模式让单元测试即使不是不可能的也会是困难的，因为单例模式有一个全局的状态。
+
+                                                                                                                                                       这意味着，一旦实例化，那么这个实例便会仅仅围绕着这个单元测试。这可能会导致测试中意外地相互影响。
+
+                                                                                                                                                       有个变通方法，那就是每次测试运行后好好地“清理”单例，然而我发现这仍然是生产上的禁忌并且很麻烦。
+
+                                                                                                                                                       ##并不全是坏事，不是吗？
+                                                                                                                                                       它们不能全是坏事，不是吗？好吧，让我们试着辩论下单例模式的好处和某些情况下它们是有用的：
+
+                                                                                                                                                       *    *调试日志：*几乎所有的开发者都同意调试日志记录这种方式应该适用于每一个功能和每一部分的代码。单例模式可以在不伤害可读性、可测试性及可维护性上达到这个目的。
+
+                                                                                                                                                       *    *文件系统和数据库访问：*访问文件系统和数据库用单例模式是由理由的，如果你需要一个文件系统或者数据库的全局访问点，单例模式在提供灵活性和可测试性上会小有帮助，这是有用的。
+
+                                                                                                                                                       ##结论
+                                                                                                                                                       单例模式、“反模式”和设计模式一般来讲并不是好的或者坏的。是什么让单例模式变成一个“反模式”并不是因为模式本身，而是因为单例模式往往很容易地被人们很差地实现。
+
+                                                                                                                                                       如果被不正确地实现(这是经常发生的)，任何模式都可能变成“反模式”。话虽这么说，就现代的PHP和现代的框架来说很难有赞成单例模式的情况。就我个人而言，对于单例模式，我看不出它有什么好处，恰恰看到了它有许多的缺点。
+
+                                                                                                                                                       *最后我明白的一点是，单例模式是一个有争议和偏见的话题。如果你有想补充任何在这篇文章中提到的观点，或者能提供有用的案例，我非常想看到你们在文章后面的评论。*
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/05/23/an-introduction-to-hhvm/">HVVM简介(译)</a></h1>
     
     
       <p class="meta">
@@ -155,7 +269,11 @@
   <ul id="recent_posts">
     
       <li class="post">
-        <a href="/blog/2014/05/23/an-introduction-to-hhvm/">An Introduction to HHVM</a>
+        <a href="/blog/2014/05/23/design-patterns-in-php-singletons/">PHP中的设计模式：单例模式</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/05/23/an-introduction-to-hhvm/">HVVM简介(译)</a>
       </li>
     
   </ul>
