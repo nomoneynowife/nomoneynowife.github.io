@@ -4,7 +4,7 @@
   <title><![CDATA[樱花舞乱我心的博客]]></title>
   <link href="http://nomoneynowife.github.io/atom.xml" rel="self"/>
   <link href="http://nomoneynowife.github.io/"/>
-  <updated>2014-05-24T00:07:05+08:00</updated>
+  <updated>2014-05-24T00:09:56+08:00</updated>
   <id>http://nomoneynowife.github.io/</id>
   <author>
     <name><![CDATA[nomoneynowife]]></name>
@@ -14,7 +14,7 @@
 
   
   <entry>
-    <title type="html"><![CDATA[PHP中的设计模式：单例模式]]></title>
+    <title type="html"><![CDATA[PHP中的设计模式：单例模式(译)]]></title>
     <link href="http://nomoneynowife.github.io/blog/2014/05/23/design-patterns-in-php-singletons/"/>
     <updated>2014-05-23T23:30:14+08:00</updated>
     <id>http://nomoneynowife.github.io/blog/2014/05/23/design-patterns-in-php-singletons</id>
