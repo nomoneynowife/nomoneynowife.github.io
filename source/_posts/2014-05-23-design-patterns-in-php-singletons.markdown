@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "PHP中的设计模式：单例模式"
+title: "PHP中的设计模式：单例模式(译)"
 date: 2014-05-23 23:30:14 +0800
 comments: true
 categories: 
