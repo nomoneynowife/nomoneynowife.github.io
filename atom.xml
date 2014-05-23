@@ -4,7 +4,7 @@
   <title><![CDATA[樱花舞乱我心的博客]]></title>
   <link href="http://nomoneynowife.github.io/atom.xml" rel="self"/>
   <link href="http://nomoneynowife.github.io/"/>
-  <updated>2014-05-23T23:32:04+08:00</updated>
+  <updated>2014-05-23T23:43:30+08:00</updated>
   <id>http://nomoneynowife.github.io/</id>
   <author>
     <name><![CDATA[nomoneynowife]]></name>
@@ -24,8 +24,7 @@
 
 <p>一个基本的单例实现看起来像下面的例子：</p>
 
-<pre><code>&lt;?php
-    /** Example taken from http://www.webgeekly.com/tutorials/php/how-to-create-a-singleton-class-in-php/ **/
+<pre><code>    /** Example taken from http://www.webgeekly.com/tutorials/php/how-to-create-a-singleton-class-in-php/ **/
 
            class User
                {
@@ -46,7 +45,6 @@
                                                                                                                                            $user2 = User::singleton();
                                                                                                                                                $user3 = User::singleton();
 
-                                                                                                                                                       ?&gt;
                                                                                                                                                        在上面的例子中3个变量都指向同一个对象。第一次调用会实例化出一个对象，而后续的调用都只返回该对象。
 
                                                                                                                                                        &gt;“在计算机编程中，延迟初始化是一种策略，直到第一次需要时才会去创建一个对象、计算一个值或者其他昂贵的过程。”
