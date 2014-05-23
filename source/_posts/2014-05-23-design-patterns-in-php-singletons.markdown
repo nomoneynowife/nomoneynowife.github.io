@@ -5,6 +5,9 @@ date: 2014-05-23 23:30:14 +0800
 comments: true
 categories: 
 ---
+原文链接：[http://coderoncode.com/2014/01/27/design-patterns-php-singletons.html]()
+http://coderoncode.com/2014/01/27/design-patterns-php-singletons.html
+
 单例模式用于限制类实例化到单个对象，当整个系统只需要一个对象时这将有用。
 
 单例模式被设计来确保只有一个单一的(因此得名单例)类实例，并且有一个全局的访问点。通过这个单一实例我们有一个全局的访问点并且可以延迟初始化。
