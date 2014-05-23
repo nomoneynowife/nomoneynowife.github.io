@@ -4,7 +4,7 @@
   <title><![CDATA[樱花舞乱我心的博客]]></title>
   <link href="http://nomoneynowife.github.io/atom.xml" rel="self"/>
   <link href="http://nomoneynowife.github.io/"/>
-  <updated>2014-05-23T23:57:24+08:00</updated>
+  <updated>2014-05-24T00:04:10+08:00</updated>
   <id>http://nomoneynowife.github.io/</id>
   <author>
     <name><![CDATA[nomoneynowife]]></name>
@@ -18,7 +18,10 @@
     <link href="http://nomoneynowife.github.io/blog/2014/05/23/design-patterns-in-php-singletons/"/>
     <updated>2014-05-23T23:30:14+08:00</updated>
     <id>http://nomoneynowife.github.io/blog/2014/05/23/design-patterns-in-php-singletons</id>
-    <content type="html"><![CDATA[<p>单例模式用于限制类实例化到单个对象，当整个系统只需要一个对象时这将有用。</p>
+    <content type="html"><![CDATA[<p>原文链接：<a href="">http://coderoncode.com/2014/01/27/design-patterns-php-singletons.html</a>
+<a href="http://coderoncode.com/2014/01/27/design-patterns-php-singletons.html">http://coderoncode.com/2014/01/27/design-patterns-php-singletons.html</a></p>
+
+<p>单例模式用于限制类实例化到单个对象，当整个系统只需要一个对象时这将有用。</p>
 
 <p>单例模式被设计来确保只有一个单一的(因此得名单例)类实例，并且有一个全局的访问点。通过这个单一实例我们有一个全局的访问点并且可以延迟初始化。</p>
 
