@@ -11,7 +11,6 @@ categories:
 
 一个基本的单例实现看起来像下面的例子：
 
-    <?php
         /** Example taken from http://www.webgeekly.com/tutorials/php/how-to-create-a-singleton-class-in-php/ **/
            
                class User
@@ -33,7 +32,6 @@ categories:
                                                                                                                                                $user2 = User::singleton();
                                                                                                                                                    $user3 = User::singleton();
                                                                                                                                                        
-                                                                                                                                                           ?>
                                                                                                                                                            在上面的例子中3个变量都指向同一个对象。第一次调用会实例化出一个对象，而后续的调用都只返回该对象。
 
                                                                                                                                                            >“在计算机编程中，延迟初始化是一种策略，直到第一次需要时才会去创建一个对象、计算一个值或者其他昂贵的过程。”
